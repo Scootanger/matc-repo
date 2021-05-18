@@ -24,7 +24,7 @@ var data = [
   }
 ];
 
-function Messag(type, user, message) {
+function Message(type, user, message) {
   this.type = type;
   this.user = user;
   this.message = message;
@@ -34,9 +34,12 @@ function createMessageElement(message) {
   var messageText = document.createTextNode(
     message.user + ': ' + message.message
   );
+
   var messageEl = document.createElement('div');
   messageEl.appendChild(messageText);
+
   messageEl.className = message.type;
+
   return messageEl;
 }
 
@@ -52,15 +55,16 @@ function addMessageHandler(event) {
       break;
     case 'reply-button':
       user = 'Joe';
-      type = messageType.out;
+      type = messageType.in;
       break;
     default:
-      user = 'unkown';
+      user = 'unknown';
       type = messageType.unkown;
   }
 
-  if (messageInput.value != ''){
-    var message = new MessageChannel(type, user, messageInput.value);
+  if (messageInput.value != '') {
+    
+    var message = new Message(type, user, messageInput.value);
     messages.push(message);
 
     var el = createMessageElement(message);
@@ -73,7 +77,7 @@ function addMessageHandler(event) {
 
 function loadSeedData() {
   for (var i = 0; i < data.length; i++) {
-    var message = new MessageChannel(data[i].type, data[i].user, data[i].message);
+    var message = new Message(data[i].type, data[i].user, data[i].message);
     messages.push(message);
   }
 
@@ -87,6 +91,7 @@ function loadSeedData() {
 }
 
 var init = function() {
+  
   document.getElementById('send-button').onclick = addMessageHandler;
   document.getElementById('reply-button').onclick = addMessageHandler;
 
